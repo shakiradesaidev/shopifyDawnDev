@@ -76,7 +76,7 @@
       "settings": {
       }
     },
-    "product-recommendations2": {
+    "product-recommendations": {
       "type": "product-recommendations",
       "settings": {
       }
@@ -84,6 +84,6 @@
   },
   "order": [
     "main",
-    "product-recommendations2"
+    "product-recommendations"
   ]
 }
