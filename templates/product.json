@@ -83,7 +83,7 @@
     }
   },
   "order": [
-    "product-recommendations",
-    "main"
+    "main",
+    "product-recommendations"
   ]
 }
