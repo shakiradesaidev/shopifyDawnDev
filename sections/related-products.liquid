@@ -7,17 +7,25 @@
 {%- endif -%}
 
 {%- style -%}
+.section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+  padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+}
+@media screen and (min-width: 750px) {
   .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
+}
+.product-card__add-to-cart {
+  display: block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
@@ -28,7 +36,7 @@
     data-product-id="{{ product.id }}"
   >
     {% if recommendations.performed and recommendations.products_count > 0 %}
-      <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}">
+      <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}" style="color: {{ section.settings.heading_text_color }}">
         {{ section.settings.heading }}
       </h2>
       <ul
@@ -38,25 +46,59 @@
         {% assign skip_card_product_styles = false %}
         {% for recommendation in recommendations.products %}
           <li class="grid__item">
-            {% render 'card-product',
-              card_product: recommendation,
-              media_aspect_ratio: section.settings.image_ratio,
-              image_shape: section.settings.image_shape,
-              show_secondary_image: section.settings.show_secondary_image,
-              show_vendor: section.settings.show_vendor,
-              show_rating: section.settings.show_rating,
-              skip_styles: skip_card_product_styles
-            %}
+            <p>&;</p>
+            <a href="{{ recommendation.url }}">
+              {% render 'card-product',
+                card_product: recommendation,
+                media_aspect_ratio: section.settings.image_ratio,
+                image_shape: section.settings.image_shape,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating,
+                skip_styles: skip_card_product_styles
+              %}
+            </a>
+           
+            <form action="/cart/add" method="post" id="add-to-cart-form-{{ recommendation.variants.first.id}}">
+              <input type="hidden" name="id" value="{{ recommendation.variants.first.id }}" id="variant-id-{{recommendation.variants.first.id }}">
+              <input type="hidden" name="quantity" value="1">
+              <button type="submit" class="cart-btn">Add to Cart</button>
+            </form>
+         
           </li>
           {%- assign skip_card_product_styles = true -%}
         {% endfor %}
       </ul>
+      {% if section.settings.custom_link != blank and section.settings.custom_link_text != blank %}
+        <a href="{{ section.settings.custom_link }}" class="custom-link" style="color: {{ section.settings.link_color }}">{{ section.settings.custom_link_text }}</a>
+      {% else %}
+        <!-- <hr class="custom-line" style="border-color: {{ section.settings.line_color }}">
+      {% endif %} -->
     {% endif %}
   </product-recommendations>
   {% if section.settings.image_shape == 'arch' %}
     {% render 'mask-arch' %}
   {%- endif -%}
 </div>
+
+
+   <script>
+  document.getElementById('variant-select-{{ recommendation.variants.first.id }}').addEventListener('change', function() {
+    document.getElementById('variant-id-{{ recommendation.variants.first.id }}').value = this.value;
+  });
+
+  // Reset form fields and select values after back button press
+  window.addEventListener('pageshow', function(event) {
+    var form = document.getElementById('add-to-cart-form-{{ recommendation.variants.first.id }}');
+    if (form) {
+      form.reset(); // Reset form fields
+      var select = document.getElementById('variant-select-{{ recommendation.variants.first.id }}');
+      if (select) {
+        select.selectedIndex = 0; // Reset select value to default
+      }
+    }
+  });
+</script>
 
 {% schema %}
 {
@@ -67,6 +109,36 @@
     {
       "type": "paragraph",
       "content": "t:sections.related-products.settings.paragraph__1.content"
+    },
+    {
+      "type": "url",
+      "id": "custom_link",
+      "label": "Custom Link"
+    },
+    {
+      "type": "text",
+      "id": "custom_link_text",
+      "label": "Custom Link Text"
+    },
+    {
+      "type": "color",
+      "id": "heading_text_color",
+      "label": "Heading Text Color"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Line Color"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link Color"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color"
     },
     {
       "type": "inline_richtext",

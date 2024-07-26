@@ -5,3 +5,23 @@
 .related-products__heading {
   margin: 0 0 3rem;
 }
+ .custom-link {
+    display: block;
+    margin-top: 20px;
+    text-align: right;
+  }
+  .custom-line {
+    border: 1px solid;
+    margin-top: 20px;
+  }
+  button.cart-btn {
+    display: flex;
+    background: #000;
+    color: #fff;
+    border: 0;
+    padding: 10px 20px;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
