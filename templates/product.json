@@ -76,27 +76,14 @@
       "settings": {
       }
     },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "settings": {
-      }
-    },
     "dev-selection": {
       "type": "dev-selection",
       "settings": {
-        "heading": "Dev's Selection",
-        "heading_color": "#000000",
-        "link_name": "",
-        "link_url": "",
-        "line_color": "#cccccc",
-        "link_color": "#007bff",
-        "icon_color": "#007bff"
       }
     }
   },
   "order": [
     "main",
-    "product-recommendations",
     "dev-selection"
   ]
 }
