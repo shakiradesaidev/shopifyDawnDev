@@ -1,52 +1,6 @@
-
-{% assign recommendations = product.recommendations %}
-{% if recommendations.size > 0 %}
-  <section class="py-10">
-    <div class="container mx-auto px-4">
-      <h2 class="text-2xl font-bold" style="color: {{ settings.heading_color }}">{{ settings.heading }}</h2>
-      {% if settings.link_name and settings.link_url %}
-        <a href="{{ settings.link_url }}" class="text-sm text-{{ settings.link_color }} hover:underline">
-          {{ settings.link_name }}
-        </a>
-      {% else %}
-        <hr class="border-t border-{{ settings.line_color }}">
-      {% endif %}
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-        {% for recommendation in recommendations %}
-          <div class="bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <a href="{{ recommendation.url }}" class="block">
-              <img src="{{ recommendation.image | img_url: 'medium' }}" alt="{{ recommendation.title }}" class="w-full h-48 object-cover">
-              <div class="p-4">
-                <h3 class="text-lg font-semibold">{{ recommendation.title }}</h3>
-                {% if recommendation.compare_at_price > recommendation.price %}
-                  <p class="text-red-500 font-semibold">{{ recommendation.price | money }}</p>
-                  <p class="text-gray-500 line-through">{{ recommendation.compare_at_price | money }}</p>
-                {% else %}
-                  <p class="text-gray-700 font-semibold">{{ recommendation.price | money }}</p>
-                {% endif %}
-                {% if recommendation.tags %}
-                  <div class="mt-2">
-                    {% for tag in recommendation.tags %}
-                      <span class="inline-block bg-gray-200 text-gray-700 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{{ tag }}</span>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-                <div class="mt-4">
-                  <a href="{{ recommendation.url }}" class="text-{{ settings.link_color }} hover:underline">
-                    View Details
-                  </a>
-                </div>
-              </div>
-            </a>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-{% endif %}
 {% schema %}
 {
-  "name": "Dev's Selection",
+  "name": "Dev’s Selection",
   "settings": [
     {
       "type": "text",
@@ -96,3 +50,49 @@
   ]
 }
 {% endschema %}
+
+{% assign recommendations = product.recommendations %}
+{% if recommendations.size > 0 %}
+  <section class="py-10">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold" style="color: {{ settings.heading_color }}">{{ settings.heading }}</h2>
+      {% if settings.link_name and settings.link_url %}
+        <a href="{{ settings.link_url }}" class="text-sm" style="color: {{ settings.link_color }};">
+          {{ settings.link_name }}
+        </a>
+      {% else %}
+        <hr class="border-t" style="border-color: {{ settings.line_color }};">
+      {% endif %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+        {% for recommendation in recommendations %}
+          <div class="bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <a href="{{ recommendation.url }}" class="block">
+              <img src="{{ recommendation.image | img_url: 'medium' }}" alt="{{ recommendation.title }}" class="w-full h-48 object-cover hover:opacity-75 transition-opacity duration-300">
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">{{ recommendation.title }}</h3>
+                {% if recommendation.compare_at_price > recommendation.price %}
+                  <p class="text-red-500 font-semibold">{{ recommendation.price | money }}</p>
+                  <p class="text-gray-500 line-through">{{ recommendation.compare_at_price | money }}</p>
+                {% else %}
+                  <p class="text-gray-700 font-semibold">{{ recommendation.price | money }}</p>
+                {% endif %}
+                {% if recommendation.tags %}
+                  <div class="mt-2">
+                    {% for tag in recommendation.tags %}
+                      <span class="inline-block bg-gray-200 text-gray-700 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">{{ tag }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                <div class="mt-4">
+                  <a href="{{ recommendation.url }}" class="hover:underline" style="color: {{ settings.link_color }};">
+                    View Details
+                  </a>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
