@@ -18,6 +18,47 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .product-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-card img {
+    transition: opacity 0.3s ease;
+  }
+
+  .product-card:hover .product-card__secondary-image {
+    opacity: 1;
+  }
+
+  .product-card__secondary-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-card__tags {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #999;
+  }
+
+  .product-card__sale-state {
+    font-size: 16px;
+    color: #f00;
+    font-weight: bold;
+  }
+
+  .heart-icon {
+    font-size: 20px;
+    color: #f00;
+  }
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
@@ -38,15 +79,32 @@
         {% assign skip_card_product_styles = false %}
         {% for recommendation in recommendations.products %}
           <li class="grid__item">
-            {% render 'card-product',
-              card_product: recommendation,
-              media_aspect_ratio: section.settings.image_ratio,
-              image_shape: section.settings.image_shape,
-              show_secondary_image: section.settings.show_secondary_image,
-              show_vendor: section.settings.show_vendor,
-              show_rating: section.settings.show_rating,
-              skip_styles: skip_card_product_styles
-            %}
+            <a href="{{ recommendation.url }}" class="product-card">
+              {% render 'card-product',
+                card_product: recommendation,
+                media_aspect_ratio: section.settings.image_ratio,
+                image_shape: section.settings.image_shape,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating,
+                skip_styles: skip_card_product_styles
+              %}
+              <img src="{{ recommendation.featured_image | img_url: '480x480' }}" alt="{{ recommendation.title }}" />
+              {% if recommendation.images.size > 1 %}
+                <img class="product-card__secondary-image" src="{{ recommendation.images[1] | img_url: '480x480' }}" alt="Secondary image" />
+              {% endif %}
+              <div class="product-card__tags">
+                {% for tag in recommendation.tags %}
+                  <span class="product-tag">{{ tag }}</span>
+                {% endfor %}
+              </div>
+              <div class="product-card__sale-state">
+                {% if recommendation.compare_at_price > recommendation.price %}
+                  On Sale!
+                {% endif %}
+              </div>
+              <div class="heart-icon">❤️</div>
+            </a>
           </li>
           {%- assign skip_card_product_styles = true -%}
         {% endfor %}
