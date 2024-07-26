@@ -1,6 +1,6 @@
 {% schema %}
   {
-    "name": "Dev's Selection",
+    "name": "Dev’s Selection",
     "settings": [
       {
         "type": "text",
@@ -52,18 +52,17 @@
   {% endschema %}
   
   {% assign recommendations = product.recommendations %}
-  <section class="py-10">
-    <div class="container mx-auto px-4">
-      <h2 class="text-2xl font-bold" style="color: {{ settings.heading_color }}">{{ settings.heading }}</h2>
-      {% if settings.link_name and settings.link_url %}
-        <a href="{{ settings.link_url }}" class="text-sm" style="color: {{ settings.link_color }};">
-          {{ settings.link_name }}
-        </a>
-      {% else %}
-        <hr class="border-t" style="border-color: {{ settings.line_color }};">
-      {% endif %}
-      
-      {% if recommendations.size > 0 %}
+  {% if recommendations.size > 0 %}
+    <section class="py-10">
+      <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold" style="color: {{ settings.heading_color }}">{{ settings.heading }}</h2>
+        {% if settings.link_name and settings.link_url %}
+          <a href="{{ settings.link_url }}" class="text-sm" style="color: {{ settings.link_color }};">
+            {{ settings.link_name }}
+          </a>
+        {% else %}
+          <hr class="border-t" style="border-color: {{ settings.line_color }};">
+        {% endif %}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
           {% for recommendation in recommendations %}
             <div class="bg-white border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
@@ -94,9 +93,7 @@
             </div>
           {% endfor %}
         </div>
-      {% else %}
-        <p>No recommendations available.</p>
-      {% endif %}
-    </div>
-  </section>
+      </div>
+    </section>
+  {% endif %}
   
