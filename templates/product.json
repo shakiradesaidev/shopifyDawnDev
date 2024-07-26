@@ -39,7 +39,6 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button"
           }
         },
         "quantity_selector": {
@@ -50,7 +49,6 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true
           }
         },
         "description": {
@@ -61,7 +59,6 @@
         "share": {
           "type": "share",
           "settings": {
-            "share_label": "Share"
           }
         }
       },
@@ -77,26 +74,16 @@
         "share"
       ],
       "settings": {
-        "enable_sticky_info": true,
-        "hide_variants": false,
-        "enable_video_looping": false
       }
     },
-    "dev-selection": {
-      "type": "dev-selection",
+    "product-recommendations": {
+      "type": "product-recommendations",
       "settings": {
-        "heading": "Dev’s Selectionsdasdasdas",
-        "heading_color": "#000000",
-        "link_name": "",
-        "link_url": "",
-        "line_color": "#cccccc",
-        "link_color": "#007bff",
-        "icon_color": "#007bff"
       }
     }
   },
   "order": [
     "main",
-    "dev-selection"
+    "product-recommendations"
   ]
 }
