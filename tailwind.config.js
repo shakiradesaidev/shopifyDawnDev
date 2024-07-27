@@ -13,6 +13,10 @@ module.exports = {
         customBlue: '#007bff',
         customGray: '#cccccc',
       },
+      screens: {
+        'md': '768px', 
+        
+      },
     },
   },
   plugins: [],
