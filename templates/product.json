@@ -91,11 +91,11 @@
       "settings": {
         "custom_link": "",
         "custom_link_text": "",
-        "heading_text_color": "#000000",
+        "heading_text_color": "#202bcb",
         "line_color": "rgba(0,0,0,0)",
         "link_color": "",
         "icon_color": "",
-        "heading": "You may also like",
+        "heading": "Related products",
         "heading_size": "h1",
         "products_to_show": 4,
         "columns_desktop": 4,
