@@ -40,35 +40,36 @@
         {{ section.settings.heading }}
       </h2>
       <ul
-        class="grid grid-cols-{{ section.settings.columns_desktop }} gap-4 md:grid-cols-{{ section.settings.columns_mobile }}"
-        role="list"
-      >
-        {% assign skip_card_product_styles = false %}
-        {% for recommendation in recommendations.products %}
-          <li class="grid__item relative">
-            <img class="heart absolute z-50 top-2.5 right-2.5 w-5" src="https://cdn.shopify.com/s/files/1/0606/9957/4449/files/heart.png?v=1722016489" width="auto" height="auto"> 
-            <a href="{{ recommendation.url }}">
-              {% render 'card-product',
-                card_product: recommendation,
-                media_aspect_ratio: section.settings.image_ratio,
-                image_shape: section.settings.image_shape,
-                show_secondary_image: section.settings.show_secondary_image,
-                show_vendor: section.settings.show_vendor,
-                show_rating: section.settings.show_rating,
-                skip_styles: skip_card_product_styles
-              %}
-            </a>
-           
-            <form action="/cart/add" method="post" id="add-to-cart-form-{{ recommendation.variants.first.id}}">
-              <input type="hidden" name="id" value="{{ recommendation.variants.first.id }}" id="variant-id-{{recommendation.variants.first.id }}">
-              <input type="hidden" name="quantity" value="1">
-              <button type="submit" class="cart-btn flex bg-black text-white border-0 py-2 px-4 items-center justify-center w-full">Add to Cart</button>
-            </form>
-         
-          </li>
-          {%- assign skip_card_product_styles = true -%}
-        {% endfor %}
-      </ul>
+  class="grid grid-cols-4 gap-4 md:grid-cols-2"
+  role="list"
+>
+  {% assign skip_card_product_styles = false %}
+  {% for recommendation in recommendations.products %}
+    <li class="grid__item relative">
+      <img class="heart absolute z-50 top-2.5 right-2.5 w-5" src="https://cdn.shopify.com/s/files/1/0606/9957/4449/files/heart.png?v=1722016489" width="auto" height="auto">
+      <a href="{{ recommendation.url }}">
+        {% render 'card-product',
+          card_product: recommendation,
+          media_aspect_ratio: section.settings.image_ratio,
+          image_shape: section.settings.image_shape,
+          show_secondary_image: section.settings.show_secondary_image,
+          show_vendor: section.settings.show_vendor,
+          show_rating: section.settings.show_rating,
+          skip_styles: skip_card_product_styles
+        %}
+      </a>
+     
+      <form action="/cart/add" method="post" id="add-to-cart-form-{{ recommendation.variants.first.id}}">
+        <input type="hidden" name="id" value="{{ recommendation.variants.first.id }}" id="variant-id-{{recommendation.variants.first.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="cart-btn flex bg-black text-white border-0 py-2 px-4 items-center justify-center w-full">Add to Cart</button>
+      </form>
+   
+    </li>
+    {%- assign skip_card_product_styles = true -%}
+  {% endfor %}
+</ul>
+
       {% if section.settings.custom_link != blank and section.settings.custom_link_text != blank %}
         <a href="{{ section.settings.custom_link }}" class="custom-link block mt-5 text-right" style="color: {{ section.settings.link_color }}">{{ section.settings.custom_link_text }}</a>
       {% else %}
